@@ -18,16 +18,16 @@ public interface ProjectInterface {
     @GET("projects")
     Call<List<Project>> getListProjects();
 
-    @GET("projects/?")
-    Call<List<Project>> getProject(@Query("_id") int _id);
+    @DELETE("projects/{id}")
+    Call <Project> deleteProject(@Path("id") String id);
+
+    @GET("projects/{id}")
+    Call<Project> getProject(@Path("id") String id);
 
     @POST("projects/")
     Call<Project> createProject(@Body Project project);
 
-    @PUT("projects/{_id}")
-    Call <Project> updateProject(@Path("_id") int _id, @Body Project project);
-
-    @DELETE("projects/{_id}")
-    Call <Project> deleteProject(@Path("_id") int _id);
+    @PUT("projects/{id}")
+    Call <Project> updateProject(@Path("id") String id, @Body Project project);
 
 }

@@ -1,12 +1,15 @@
 package com.robsonlima.atena;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -25,6 +28,7 @@ public class ProjectsActivity extends AppCompatActivity {
     ProjectInterface projectInterface;
     List<Project> projects;
     ListView listProjects;
+    ArrayAdapter<Project> listProjectsAdapter;
     ProgressDialog progress;
 
     @Override
@@ -37,6 +41,26 @@ public class ProjectsActivity extends AppCompatActivity {
         listProjects = (ListView) findViewById(R.id.listProjects);
 
         onLoadProjects();
+
+        listProjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+                Project project = (Project) parent.getItemAtPosition(pos);
+                Intent intent = new Intent(ProjectsActivity.this, ProjectActivity.class);
+                intent.putExtra("projectId", project._id);
+                startActivity(intent);
+            }
+        });
+
+        listProjects.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
+                Project project = (Project) parent.getItemAtPosition(pos);
+                deleteProject(project);
+
+                return true;
+            }
+        });
     }
 
     private void onLoadProjects() {
@@ -51,7 +75,7 @@ public class ProjectsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Project>> call, Response<List<Project>> response) {
                 projects = response.body();
-                onLoadListProjects();
+                loadListProjects();
                 progress.dismiss();
             }
 
@@ -66,10 +90,50 @@ public class ProjectsActivity extends AppCompatActivity {
         });
     }
 
-    private void onLoadListProjects() {
-        ArrayAdapter<Project> adapter = new ArrayAdapter<Project>(ProjectsActivity.this,
+    private void loadListProjects() {
+        listProjectsAdapter = new ArrayAdapter<Project>(ProjectsActivity.this,
                 android.R.layout.simple_list_item_1, projects);
-        listProjects.setAdapter(adapter);
+        listProjects.setAdapter(listProjectsAdapter);
+    }
+
+    private void removeItemFromListProjects(Project project) {
+        listProjectsAdapter.remove(project);
+        listProjectsAdapter.notifyDataSetChanged();
+    }
+
+    private void deleteProject(final Project project) {
+        new AlertDialog.Builder(this)
+            .setTitle("Confirm")
+            .setMessage("Do you really want to delete this project?")
+            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    progress = new ProgressDialog(ProjectsActivity.this);
+                    progress.setTitle("Loading");
+                    progress.setMessage("Wait while deleting...");
+                    progress.setCancelable(false);
+                    progress.show();
+
+                    Call<Project> call = projectInterface.deleteProject(project._id);
+                    call.enqueue(new Callback<Project>() {
+                        @Override
+                        public void onResponse(Call<Project> call, Response<Project> response) {
+                            Snackbar.make(findViewById(R.id.projectsActivity),project.name +
+                                    " deleted!", Snackbar.LENGTH_LONG).show();
+
+                            removeItemFromListProjects(project);
+
+                            progress.dismiss();
+                        }
+
+                        @Override
+                        public void onFailure(Call<Project> call, Throwable t) {
+                            call.cancel();
+
+                            progress.dismiss();
+                        }
+                    });
+                }})
+            .setNegativeButton(android.R.string.no, null).show();
     }
 
     public void onCreateProject(View view) {

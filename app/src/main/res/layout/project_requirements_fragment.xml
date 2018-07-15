@@ -2,13 +2,13 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProjectsActivity"
-    android:id="@+id/projectsActivity">
+    tools:context=".ProjectActivity">
 
     <ListView
-        android:id="@+id/listProjects"
+        android:id="@+id/listRequirements"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:divider="@android:color/transparent"
@@ -17,12 +17,15 @@
         android:dividerHeight="4.0sp" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabCreateProject"
+        android:id="@+id/fabCreateRequirement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_frg_margin"
         android:src="@mipmap/ic_action_add"
-        app:backgroundTint="@color/colorPrimary" />
+        app:backgroundTint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.design.widget.CoordinatorLayout>

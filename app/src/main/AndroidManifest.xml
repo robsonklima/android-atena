@@ -19,14 +19,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProjectActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/title_activity_project" />
-        <activity
             android:name=".ProjectsActivity"
-            android:label="@string/title_activity_projects">
-        </activity>
-
+            android:label="@string/title_activity_projects"></activity>
+        <activity
+            android:name=".ProjectActivity"
+            android:label="@string/title_activity_project"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
