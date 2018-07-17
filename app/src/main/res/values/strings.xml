@@ -9,8 +9,10 @@
     <string name="title_activity_requirement">Requirement</string>
 
     <string name="et_login_hint">Login</string>
+    <string name="et_password_hint">Password</string>
     <string name="text_btn_login">Login</string>
     <string name="et_name_hint">Name</string>
     <string name="text_btn_submit">Submit</string>
+    <string name="text_tv_forget_password">I have forgot my password</string>
 
 </resources>

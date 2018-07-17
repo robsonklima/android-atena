@@ -4,15 +4,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical"
     tools:context=".LoginActivity">
 
-    <Button
-        android:id="@+id/etLogin"
-        android:layout_width="wrap_content"
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="50dp"
+        app:srcCompat="@drawable/atena_logo" />
+
+    <EditText
+        android:id="@+id/etLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:ems="10"
         android:hint="@string/et_login_hint"
+        android:inputType="textPersonName"
+        android:shadowColor="@color/colorPrimaryLight"
+        android:textColor="@color/colorDivider"
+        android:textColorHint="@color/colorPrimary"
+        android:textColorLink="@color/colorAccent" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="6dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:ems="10"
+        android:hint="@string/et_password_hint"
+        android:inputType="textPersonName"
+        android:shadowColor="@color/colorPrimaryLight"
+        android:textColor="@color/colorDivider"
+        android:textColorHint="@color/colorPrimary"
+        android:textColorLink="@color/colorAccent" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorPrimary"
         android:onClick="login"
-        android:text="@string/text_btn_login" />
+        android:text="@string/text_btn_login"
+        android:textColor="@color/colorPrimaryLight" />
+
+    <TextView
+        android:id="@+id/tvForgetPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:text="@string/text_tv_forget_password"
+        android:textColor="@color/colorPrimaryLight"
+        android:textSize="16sp" />
 
 </LinearLayout>

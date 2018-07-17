@@ -21,18 +21,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".ProjectsActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_projects" />
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".ProjectActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_project"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".RequirementActivity"
-            android:label="@string/title_activity_requirement">
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_requirement"></activity>
+        <activity
+            android:name=".ProjectAddActivity"
+            android:label="@string/title_activity_project"
+            android:configChanges="orientation|screenSize">
         </activity>
     </application>
 

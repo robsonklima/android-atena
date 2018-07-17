@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class ProjectsActivity extends AppCompatActivity {
     ProjectInterface projectInterface;
     List<Project> projects;
     ListView listProjects;
+    FloatingActionButton fabOnLoadNewProject;
     ArrayAdapter<Project> listProjectsAdapter;
     ProgressDialog progress;
 
@@ -39,6 +41,7 @@ public class ProjectsActivity extends AppCompatActivity {
 
         projectInterface = APIClient.getClient().create(ProjectInterface.class);
         listProjects = (ListView) findViewById(R.id.listProjects);
+        fabOnLoadNewProject = (FloatingActionButton) findViewById(R.id.fabCreateProject);
 
         listProjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -57,6 +60,16 @@ public class ProjectsActivity extends AppCompatActivity {
                 deleteProject(project);
 
                 return true;
+            }
+        });
+
+        fabOnLoadNewProject.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(ProjectsActivity.this, ProjectAddActivity.class);
+                startActivity(intent);
             }
         });
     }
