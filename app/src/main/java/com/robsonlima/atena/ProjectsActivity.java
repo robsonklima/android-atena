@@ -40,8 +40,6 @@ public class ProjectsActivity extends AppCompatActivity {
         projectInterface = APIClient.getClient().create(ProjectInterface.class);
         listProjects = (ListView) findViewById(R.id.listProjects);
 
-        onLoadProjects();
-
         listProjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
@@ -61,6 +59,13 @@ public class ProjectsActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        onLoadProjects();
     }
 
     private void onLoadProjects() {

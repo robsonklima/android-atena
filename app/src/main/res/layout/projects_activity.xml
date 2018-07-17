@@ -14,7 +14,7 @@
         android:divider="@android:color/transparent"
         android:paddingTop="14dp"
         android:clipToPadding="false"
-        android:dividerHeight="4.0sp" />
+        android:dividerHeight="2.0sp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabCreateProject"

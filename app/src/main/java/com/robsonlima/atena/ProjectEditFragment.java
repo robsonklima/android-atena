@@ -9,10 +9,15 @@ import android.widget.TextView;
 
 public class ProjectEditFragment extends Fragment {
 
+    public static TextView etName;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.project_edit_fragment, container, false);
-        return rootView;
+        View view = inflater.inflate(R.layout.project_edit_fragment, container, false);
+
+        etName = (TextView) view.findViewById(R.id.etName);
+
+        return view;
     }
 
 }

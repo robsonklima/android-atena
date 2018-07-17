@@ -2,30 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/projectEditFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProjectActivity"
-    android:orientation="vertical">
+    tools:context=".RequirementActivity"
+    android:orientation="vertical"
+    android:id="@+id/requirementActivity">
 
     <EditText
         android:id="@+id/etName"
-        android:hint="@string/et_name_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:ems="10"
+        android:hint="@string/et_name_hint"
         android:inputType="textPersonName" />
 
     <Button
         android:id="@+id/btnSubmit"
-        android:text="@string/text_btn_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:onClick="onClickSubmit" />
+        android:text="@string/text_btn_submit" />
 </LinearLayout>

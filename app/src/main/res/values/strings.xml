@@ -11,6 +11,6 @@
     <string name="text_btn_login">Login</string>
     <string name="et_name_hint">Name</string>
     <string name="text_btn_create_requirement">Add New Requirement</string>
-    <string name="text_btn_create_project">Add New Project</string>
+    <string name="text_btn_submit">Submit</string>
 
 </resources>

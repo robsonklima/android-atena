@@ -1,7 +1,10 @@
 package com.robsonlima.atena;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,14 +15,23 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.robsonlima.atena.api.APIClient;
 import com.robsonlima.atena.interfaces.ProjectInterface;
+import com.robsonlima.atena.interfaces.RequirementInterface;
 import com.robsonlima.atena.models.Project;
+import com.robsonlima.atena.models.Requirement;
 
 import java.util.List;
 
@@ -33,9 +45,10 @@ public class ProjectActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     ProgressDialog progress;
     ProjectInterface projectInterface;
-    EditText etName;
+    RequirementInterface requirementInterface;
     String projectId;
     Project project;
+    ProjectEditFragment projectEditFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +56,7 @@ public class ProjectActivity extends AppCompatActivity {
         setContentView(R.layout.project_activity);
 
         projectInterface = APIClient.getClient().create(ProjectInterface.class);
-        etName = (EditText) findViewById(R.id.etName);
-
-        if (getIntent().hasExtra("projectId")) {
-            projectId = getIntent().getStringExtra("projectId");
-            onLoadProject();
-        }
+        requirementInterface = APIClient.getClient().create(RequirementInterface.class);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,46 +71,24 @@ public class ProjectActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+        //tabLayout.getTabAt(0).setIcon(R.mipmap.ic_action_add_circle);
+        //tabLayout.getTabAt(1).setIcon(R.mipmap.ic_action_add_circle);
+
+        projectEditFragment = (ProjectEditFragment) getSupportFragmentManager().findFragmentById(R.id.projectEditFragment);
     }
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-        @Override
-        public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    ProjectEditFragment fr1 = new ProjectEditFragment();
-                    return fr1;
-                case 1:
-                    ProjectRequirementsFragment fr2 = new ProjectRequirementsFragment();
-                    return fr2;
-                default:
-                    return null;
-            }
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return R.string.title_project_edit_fragment+"";
-                case 1:
-                    return R.string.title_project_requirements_fragment+"";
-            }
-
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return 2;
+        if (getIntent().hasExtra("projectId")) {
+            projectId = getIntent().getStringExtra("projectId");
+            loadProject();
         }
     }
 
-    private void onLoadProject() {
+    private void loadProject() {
         progress = new ProgressDialog(this);
         progress.setTitle("Loading");
         progress.setMessage("Wait while loading...");
@@ -114,7 +100,7 @@ public class ProjectActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Project> call, Response<Project> response) {
                 project = (Project) response.body();
-                etName.setText("OLA");
+                projectEditFragment.etName.setText(project.name);
                 progress.dismiss();
             }
 
@@ -130,17 +116,21 @@ public class ProjectActivity extends AppCompatActivity {
     }
 
     public void onClickSubmit(View view) {
-        String name = etName.getText().toString();
+        String name = projectEditFragment.etName.getText().toString();
 
         if (name.isEmpty() || name.length() < 4) {
-            etName.setError("at least 4 alphanumeric characters");
+            projectEditFragment.etName.setError("at least 4 alphanumeric characters");
             return;
         }
 
-        if (projectId != "") {
+        if (TextUtils.isEmpty(projectId)) {
             Project newProject = new Project(name);
             createProject(newProject);
         } else {
+            project.name = name;
+            Log.e("ID ",  project._id);
+            Log.e("NAME ",  project.name);
+
             updateProject(project);
         }
 
@@ -218,5 +208,44 @@ public class ProjectActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    ProjectEditFragment projectEditFragment = new ProjectEditFragment();
+
+                    return projectEditFragment;
+                case 1:
+                    ProjectRequirementsFragment projectRequirementsFragment = new ProjectRequirementsFragment();
+
+                    return projectRequirementsFragment;
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return R.string.title_project_edit_fragment+"";
+                case 1:
+                    return R.string.title_project_requirements_fragment+"";
+            }
+
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
     }
 }
