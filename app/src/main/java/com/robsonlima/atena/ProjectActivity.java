@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -86,6 +87,8 @@ public class ProjectActivity extends AppCompatActivity {
             projectId = getIntent().getStringExtra("projectId");
             loadProject();
         }
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     private void loadProject() {
@@ -128,9 +131,6 @@ public class ProjectActivity extends AppCompatActivity {
             createProject(newProject);
         } else {
             project.name = name;
-            Log.e("ID ",  project._id);
-            Log.e("NAME ",  project.name);
-
             updateProject(project);
         }
 

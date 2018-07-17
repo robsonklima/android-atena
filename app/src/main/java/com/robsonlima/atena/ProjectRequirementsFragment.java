@@ -5,14 +5,15 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,7 +33,9 @@ public class ProjectRequirementsFragment extends Fragment {
     ProjectInterface projectInterface;
     RequirementInterface requirementInterface;
     Project project;
-    public static ListView listRequirements;
+    ListView listRequirements;
+    TextView tvMessage;
+    FloatingActionButton fabCreateRequirement;
     ArrayAdapter<Requirement> listRequirementsAdapter;
     ProjectActivity projectActivity;
 
@@ -41,43 +44,54 @@ public class ProjectRequirementsFragment extends Fragment {
         View view = inflater.inflate(R.layout.project_requirements_fragment, container, false);
 
         listRequirements = (ListView) view.findViewById(R.id.listRequirements);
+        tvMessage = (TextView) view.findViewById(R.id.tvMessage);
+        fabCreateRequirement = (FloatingActionButton) view.findViewById(R.id.fabCreateRequirement);
         requirementInterface = APIClient.getClient().create(RequirementInterface.class);
         projectInterface = APIClient.getClient().create(ProjectInterface.class);
         projectActivity = (ProjectActivity) getActivity();
-        loadProject();
 
         listRequirements.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-                Requirement requirement = (Requirement) parent.getItemAtPosition(pos);
-                //Intent intent = new Intent(ProjectActivity.this, ProjectActivity.class);
-                //intent.putExtra("requirementId", requirement._id);
-                //startActivity(intent);
+            Requirement requirement = (Requirement) parent.getItemAtPosition(pos);
+            Intent intent = new Intent(getActivity(), RequirementActivity.class);
+            intent.putExtra("requirementId", requirement._id);
+            startActivity(intent);
             }
         });
 
         listRequirements.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
-                Requirement requirement = (Requirement) parent.getItemAtPosition(pos);
-                deleteRequirement(requirement);
+            Requirement requirement = (Requirement) parent.getItemAtPosition(pos);
+            deleteRequirement(requirement);
 
-                return true;
+            return true;
             }
         });
 
-
+        fabCreateRequirement.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+            Intent intent = new Intent(getActivity(), RequirementActivity.class);
+            intent.putExtra("projectId", project._id);
+            startActivity(intent);
+            }
+        });
 
         return view;
     }
 
-    private void loadProject() {
-        progress = new ProgressDialog(getActivity());
-        progress.setTitle("Loading");
-        progress.setMessage("Wait while loading...");
-        progress.setCancelable(false);
-        progress.show();
+    @Override
+    public void onStart() {
+        super.onStart();
 
+        loadProject();
+    }
+
+    private void loadProject() {
         Call<Project> call = projectInterface.getProject(projectActivity.projectId);
         call.enqueue(new Callback<Project>() {
             @Override
@@ -85,8 +99,6 @@ public class ProjectRequirementsFragment extends Fragment {
                 project = (Project) response.body();
 
                 loadListRequirements();
-
-                progress.dismiss();
             }
 
             @Override
@@ -94,16 +106,19 @@ public class ProjectRequirementsFragment extends Fragment {
                 Snackbar.make(getActivity().findViewById(R.id.projectRequirementsFragment), "Error on getting data",
                         Snackbar.LENGTH_LONG).show();
                 call.cancel();
-                progress.dismiss();
             }
         });
     }
 
     private void loadListRequirements() {
-        listRequirementsAdapter = new ArrayAdapter<Requirement>(getActivity(),
-                android.R.layout.simple_list_item_1, project.requirements);
+        if (!project.requirements.isEmpty()) {
+            listRequirementsAdapter = new ArrayAdapter<Requirement>(getActivity(),
+                    android.R.layout.simple_list_item_1, project.requirements);
 
-        listRequirements.setAdapter(listRequirementsAdapter);
+            listRequirements.setAdapter(listRequirementsAdapter);
+        } else {
+            tvMessage.setText("No requirements");
+        }
     }
 
     private void deleteRequirement(final Requirement requirement) {
@@ -145,5 +160,4 @@ public class ProjectRequirementsFragment extends Fragment {
         listRequirementsAdapter.remove(requirement);
         listRequirementsAdapter.notifyDataSetChanged();
     }
-
 }

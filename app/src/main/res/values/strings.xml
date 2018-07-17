@@ -6,11 +6,11 @@
     <string name="title_activity_project">Project</string>
     <string name="title_project_edit_fragment">Project Edit</string>
     <string name="title_project_requirements_fragment">Requirements</string>
+    <string name="title_activity_requirement">Requirement</string>
 
     <string name="et_login_hint">Login</string>
     <string name="text_btn_login">Login</string>
     <string name="et_name_hint">Name</string>
-    <string name="text_btn_create_requirement">Add New Requirement</string>
     <string name="text_btn_submit">Submit</string>
 
 </resources>

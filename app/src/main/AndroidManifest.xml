@@ -25,7 +25,10 @@
             android:name=".ProjectActivity"
             android:label="@string/title_activity_project"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RequirementActivity"></activity>
+        <activity
+            android:name=".RequirementActivity"
+            android:label="@string/title_activity_requirement">
+        </activity>
     </application>
 
 </manifest>
