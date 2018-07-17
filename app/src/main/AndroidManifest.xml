@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity
+            android:name=".LoginActivity"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,13 +21,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".ProjectsActivity"
             android:label="@string/title_activity_projects" />
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".ProjectActivity"
             android:label="@string/title_activity_project"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".RequirementActivity"
             android:label="@string/title_activity_requirement">
         </activity>

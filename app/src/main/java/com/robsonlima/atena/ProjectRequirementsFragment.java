@@ -112,6 +112,8 @@ public class ProjectRequirementsFragment extends Fragment {
 
     private void loadListRequirements() {
         if (!project.requirements.isEmpty()) {
+            tvMessage.setText("");
+
             listRequirementsAdapter = new ArrayAdapter<Requirement>(getActivity(),
                     android.R.layout.simple_list_item_1, project.requirements);
 

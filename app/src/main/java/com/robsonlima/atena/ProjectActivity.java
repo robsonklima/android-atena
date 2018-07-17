@@ -27,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.robsonlima.atena.api.APIClient;
 import com.robsonlima.atena.interfaces.ProjectInterface;
@@ -178,10 +179,11 @@ public class ProjectActivity extends AppCompatActivity {
             public void onResponse(Call<Project> call, Response<Project> response) {
                 Project project = response.body();
 
-                Snackbar.make(findViewById(R.id.projectActivity), project.name + " updated!",
-                        Snackbar.LENGTH_LONG).show();
+                Toast.makeText(ProjectActivity.this, project.name + " updated!",
+                        Toast.LENGTH_SHORT).show();
 
                 progress.dismiss();
+                finish();
             }
 
             @Override

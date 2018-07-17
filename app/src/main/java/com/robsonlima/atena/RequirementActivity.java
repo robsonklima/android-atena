@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.robsonlima.atena.api.APIClient;
 import com.robsonlima.atena.interfaces.RequirementInterface;
@@ -114,10 +115,11 @@ public class RequirementActivity extends AppCompatActivity {
             public void onResponse(Call<Requirement> call, Response<Requirement> response) {
                 Requirement requirement = response.body();
 
-                Snackbar.make(findViewById(R.id.requirementActivity), requirement.name + " created!",
-                        Snackbar.LENGTH_LONG).show();
+                Toast.makeText(RequirementActivity.this, requirement.name + " created!",
+                        Toast.LENGTH_SHORT).show();
 
                 progress.dismiss();
+                finish();
             }
 
             @Override
@@ -142,10 +144,11 @@ public class RequirementActivity extends AppCompatActivity {
             public void onResponse(Call<Requirement> call, Response<Requirement> response) {
                 Requirement requirement = response.body();
 
-                Snackbar.make(findViewById(R.id.requirementActivity), requirement.name + " updated!",
-                        Snackbar.LENGTH_LONG).show();
+                Toast.makeText(RequirementActivity.this, requirement.name + " updated!",
+                        Toast.LENGTH_SHORT).show();
 
                 progress.dismiss();
+                finish();
             }
 
             @Override
