@@ -30,7 +30,7 @@ public class RequirementActivity extends AppCompatActivity {
     ProgressDialog progress;
     RequirementInterface requirementInterface;
     Requirement requirement;
-    TextView etName;
+    TextView etName, etDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,7 @@ public class RequirementActivity extends AppCompatActivity {
 
         requirementInterface = APIClient.getClient().create(RequirementInterface.class);
         etName = (TextView) findViewById(R.id.etName);
+        etDescription = (TextView) findViewById(R.id.etDescription);
     }
 
     @Override
@@ -69,6 +70,7 @@ public class RequirementActivity extends AppCompatActivity {
             public void onResponse(Call<Requirement> call, Response<Requirement> response) {
                 requirement = (Requirement) response.body();
                 etName.setText(requirement.name);
+                etDescription.setText(requirement.description);
                 progress.dismiss();
             }
 
@@ -85,6 +87,7 @@ public class RequirementActivity extends AppCompatActivity {
 
     public void onClickSubmit(View view) {
         String name = etName.getText().toString();
+        String description = etDescription.getText().toString();
 
         if (name.isEmpty() || name.length() < 4) {
             etName.setError("at least 4 alphanumeric characters");
@@ -92,10 +95,11 @@ public class RequirementActivity extends AppCompatActivity {
         }
 
         if (TextUtils.isEmpty(requirementId)) {
-            Requirement newRequirement = new Requirement(name);
+            Requirement newRequirement = new Requirement(name, description);
             createRequirement(newRequirement);
         } else {
             requirement.name = name;
+            requirement.description = description;
             updateRequirement(requirement);
         }
 
@@ -105,7 +109,7 @@ public class RequirementActivity extends AppCompatActivity {
     private void createRequirement(Requirement requirement) {
         progress = new ProgressDialog(this);
         progress.setTitle("Processing");
-        progress.setMessage("Wait while creating project...");
+        progress.setMessage("Wait while creating requirement...");
         progress.setCancelable(false);
         progress.show();
 
@@ -134,7 +138,7 @@ public class RequirementActivity extends AppCompatActivity {
     private void updateRequirement(final Requirement requirement) {
         progress = new ProgressDialog(this);
         progress.setTitle("Processing");
-        progress.setMessage("Wait while updating project...");
+        progress.setMessage("Wait while updating requirement...");
         progress.setCancelable(false);
         progress.show();
 

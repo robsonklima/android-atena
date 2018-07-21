@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="project_sizes">
+        <item>SMALL</item>
+        <item>STANDARD</item>
+        <item>LARGE</item>
+    </array>
+</resources>

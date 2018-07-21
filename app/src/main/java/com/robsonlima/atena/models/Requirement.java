@@ -13,8 +13,13 @@ public class Requirement {
     @Expose
     public String name;
 
-    public Requirement(String name) {
+    @SerializedName("description")
+    @Expose
+    public String description;
+
+    public Requirement(String name, String description) {
         this.name = name;
+        this.description = description;
     }
 
     @Override

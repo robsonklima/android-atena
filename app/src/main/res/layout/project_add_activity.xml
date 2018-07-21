@@ -19,6 +19,18 @@
         android:hint="@string/et_name_hint"
         android:inputType="textPersonName" />
 
+    <Spinner
+        android:id="@+id/spnProjectSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/colorDivider"
+        android:maxLines="1"
+        android:spinnerMode="dropdown"
+        android:textColor="@color/colorDivider" />
+
     <Button
         android:id="@+id/btnSubmit"
         android:layout_width="match_parent"

@@ -1,12 +1,16 @@
 package com.robsonlima.atena;
 
 import android.app.ProgressDialog;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +31,7 @@ public class ProjectAddActivity extends AppCompatActivity {
     ProgressDialog progress;
     ProjectInterface projectInterface;
     EditText etName;
+    Spinner spnProjectSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,14 @@ public class ProjectAddActivity extends AppCompatActivity {
 
         projectInterface = APIClient.getClient().create(ProjectInterface.class);
         etName = (EditText) findViewById(R.id.etName);
+
+        spnProjectSize = (Spinner) findViewById(R.id.spnProjectSize);
+        Resources res = getResources();
+        String[] projectSizes = res.getStringArray(R.array.project_sizes);
+        ArrayAdapter<CharSequence> langAdapter = new ArrayAdapter<CharSequence>(ProjectAddActivity.this,
+                R.layout.support_simple_spinner_dropdown_item, projectSizes );
+        langAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spnProjectSize.setAdapter(langAdapter);
     }
 
     public void onClickSubmit(View view) {

@@ -19,6 +19,17 @@
         android:hint="@string/et_name_hint"
         android:inputType="textPersonName" />
 
+
+    <EditText
+        android:id="@+id/etDescription"
+        android:layout_width="match_parent"
+        android:layout_height="112dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:ems="10"
+        android:hint="@string/et_description_hint"
+        android:inputType="textMultiLine" />
+
     <Button
         android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
