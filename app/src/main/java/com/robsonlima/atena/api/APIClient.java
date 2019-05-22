@@ -9,7 +9,7 @@ public class APIClient {
 
     private static Retrofit retrofit = null;
     private static final String BASE_URL_PROD = "https://node-atena.herokuapp.com/api/";
-    private static final String BASE_URL_LOCAL = "http://10.0.2.2:3000/api/";
+    //private static final String BASE_URL_LOCAL = "http://10.0.2.2:3000/api/";
 
     public static Retrofit getClient() {
 
